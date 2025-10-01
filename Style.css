@@ -1,25 +1,19 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f8ff;
-    padding: 20px;
+    font-family: 'Luckiest Guy', cursive;
+    background: url('Lilo and Stitch.png') no-repeat center center fixed;
+    background-size: cover;
 }
 
 button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin: 10px 0;
+    border-radius: 20px;
+    padding: 15px 25px;
     font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
 }
 
 #progress-bar {
