@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morning Routine Tracker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Morning Routine Tracker</h1>
+
+    <div id="profile-selection">
+        <h2>Select Your Profile:</h2>
+        <button onclick="selectProfile('Ava')">Ava</button>
+        <button onclick="selectProfile('Emma')">Emma</button>
+        <button onclick="selectProfile('Olivia')">Olivia</button>
+    </div>
+
+    <div id="routine-container" style="display:none;">
+        <h2 id="child-name"></h2>
+        <ul id="task-list"></ul>
+        <div id="progress">
+            <p>Points: <span id="points">0</span></p>
+            <div id="progress-bar"><div id="progress-fill"></div></div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
