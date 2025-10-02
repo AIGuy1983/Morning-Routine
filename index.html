@@ -1,76 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Morning Routine Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<!DOCTYPE html>
-<html lang="en">
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morning Routine Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-
+  <title>Morning Routine</title>
   <style>
     body {
-      font-family: 'Luckiest Guy', cursive;
-      background: url('Lilo and Stitch.jpg') no-repeat center center fixed;
+      font-family: Arial, sans-serif;
+      background: url("Lilo and Stitch.jpg") no-repeat center center fixed;
       background-size: cover;
-      color: #fff;
       text-align: center;
+      color: white;
     }
-    .profile-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 40px;
+    .hidden { display: none; }
+    .chart {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
     }
-    .profile-buttons button {
+    button {
+      padding: 10px 20px;
+      margin: 10px;
       border: none;
-      border-radius: 50%;
-      padding: 10px;
-      width: 120px;
-      height: 120px;
+      border-radius: 10px;
+      background-color: #4CAF50;
+      color: white;
       font-size: 18px;
       cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      color: #fff;
-      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .profile-buttons button:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 15px #fff;
-    }
-    .section {
-      display: none;
-      margin-top: 30px;
-    }
-    canvas {
-      background: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      padding: 10px;
-    }
-    label {
-      font-size: 20px;
-    }
+    button:hover { background-color: #45a049; }
+    label { display: block; margin: 10px 0; text-align: left; }
+    input[type="checkbox"] { transform: scale(1.5); margin-right: 10px; }
   </style>
 </head>
 <body>
+  <h1>Morning Routine</h1>
 
-  <h1>🌴 Morning Routine Tracker 🌺</h1>
-  <h2>Select Your Profile</h2>
+  <!-- Buttons for each kid -->
+  <button onclick="showChart('ava')">Ava</button>
+  <button onclick="showChart('emma')">Emma</button>
+  <button onclick="showChart('olivia')">Olivia</button>
 
-  <div class="profile-buttons">
-    <button onclick="showSection('girl1')">👧 Girl 1</button>
-    <button onclick="showSection('girl2')">👧 Girl 2</button>
+  <!-- Ava's chart -->
+  <div id="ava" class="chart hidden">
+    <h2>Ava's Chart</h2>
+    <label><input type="checkbox"> Brush Teeth</label>
+    <label><input type="checkbox"> Eat Breakfast</label>
+    <label><input type="checkbox"> Take Meds</label>
+    <label><input type="checkbox"> Get Dressed</label>
+  </div>
 
-<script src="script.js"></script>
+  <!-- Emma's chart -->
+  <div id="emma" class="chart hidden">
+    <h2>Emma's Chart</h2>
+    <label><input type="checkbox"> Brush Teeth</label>
+    <label><input type="checkbox"> Eat Breakfast</label>
+    <label><input type="checkbox"> Take Meds</label>
+    <label><input type="checkbox"> Get Dressed</label>
+  </div>
+
+  <!-- Olivia's chart -->
+  <div id="olivia" class="chart hidden">
+    <h2>Olivia's Chart</h2>
+    <label><input type="checkbox"> Brush Teeth</label>
+    <label><input type="checkbox"> Eat Breakfast</label>
+    <label><input type="checkbox"> Take Meds</label>
+    <label><input type="checkbox"> Get Dressed</label>
+  </div>
+
+  <script>
+    function showChart(name) {
+      // hide all charts
+      document.querySelectorAll('.chart').forEach(div => div.classList.add('hidden'));
+      // show the chosen one
+      document.getElementById(name).classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
