@@ -1,102 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morning Routine</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morning Routine Tracker</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: url("Lilo and Stitch.jpg") no-repeat center center fixed;
-      background-size: cover;
+      font-family: "Comic Sans MS", cursive, sans-serif;
       text-align: center;
+      background-image: url('Lilo and Stitch.jpg');
+      background-size: cover;
+      background-position: center;
       color: white;
+      min-height: 100vh;
     }
-    .hidden { display: none; }
-    .chart {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      margin: 20px auto;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 200px;
+    h1 {
+      font-size: 2.5em;
+      margin-top: 20px;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .girl-section {
+      margin-top: 40px;
+    }
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
     }
     button {
+      margin-top: 10px;
       padding: 10px 20px;
-      margin: 10px;
       border: none;
+      background-color: rgba(255,255,255,0.8);
       border-radius: 10px;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 18px;
       cursor: pointer;
+      font-size: 1.1em;
     }
-    button:hover { background-color: #45a049; }
-    label { display: block; margin: 10px 0; text-align: left; }
-    input[type="checkbox"] { transform: scale(1.5); margin-right: 10px; }
+    button:hover {
+      background-color: #fff;
+    }
   </style>
 </head>
 <body>
-  <h1>Morning Routine</h1>
+  <h1>🌞 Morning Routine Tracker 🌴</h1>
 
-  <!-- Ava -->
-  <img src="AvaMaker.jpg" alt="Ava">
-  <button onclick="showChart('ava')">Ava</button>
-
-  <!-- Emma -->
-  <img src="EmmaMaker.jpg" alt="Emma">
-  <button onclick="showChart('emma')">Emma</button>
-
-  <!-- Olivia -->
-  <img src="MaeMaker.jpg" alt="Olivia">
-  <button onclick="showChart('olivia')">Olivia</button>
-
-  <!-- Ava's chart -->
-  <div id="ava" class="chart hidden">
-    <h2>Ava's Chart</h2>
-    <label><input type="checkbox"> Make Bed</label>
-    <label><input type="checkbox"> Eat Breakfast</label>
-    <label><input type="checkbox"> Brush Teeth</label>
-    <label><input type="checkbox"> Get Dressed</label>
-    <label><input type="checkbox"> Brush Hair</label>
-    <label><input type="checkbox"> Take Medicine</label>
-    <label><input type="checkbox"> Backpack Packed</label>
-    <label><input type="checkbox"> Lights off Door Locked</label>
-    <label><input type="checkbox"> No Arguing</label>
+  <div class="girl-section">
+    <img src="ava.jpg" alt="Ava">
+    <br>
+    <button onclick="openPage('ava.html')">Ava's Chart</button>
   </div>
 
-  <!-- Emma's chart -->
-  <div id="emma" class="chart hidden">
-    <h2>Emma's Chart</h2>
-    <label><input type="checkbox"> Make Bed</label>
-    <label><input type="checkbox"> Eat Breakfast</label>
-    <label><input type="checkbox"> Brush Teeth</label>
-    <label><input type="checkbox"> Get Dressed</label>
-    <label><input type="checkbox"> Brush Hair</label>
-    <label><input type="checkbox"> Take Medicine</label>
-    <label><input type="checkbox"> Backpack Packed</label>
-    <label><input type="checkbox"> No Arguing</label>
+  <div class="girl-section">
+    <img src="emma.jpg" alt="Emma">
+    <br>
+    <button onclick="openPage('emma.html')">Emma's Chart</button>
   </div>
 
-  <!-- Olivia's chart -->
-  <div id="olivia" class="chart hidden">
-    <h2>Olivia's Chart</h2>
-    <label><input type="checkbox"> Make Bed</label>
-    <label><input type="checkbox"> Eat Breakfast</label>
-    <label><input type="checkbox"> Brush Teeth</label>
-    <label><input type="checkbox"> Get Dressed</label>
-    <label><input type="checkbox"> Brush Hair</label>
-    <label><input type="checkbox"> Take Medicine</label>
-    <label><input type="checkbox"> Backpack Packed</label>
-    <label><input type="checkbox"> No Arguing</label>
+  <div class="girl-section">
+    <img src="olivia.jpg" alt="Olivia">
+    <br>
+    <button onclick="openPage('olivia.html')">Olivia's Chart</button>
   </div>
 
   <script>
-    function showChart(name) {
-      // hide all charts
-      document.querySelectorAll('.chart').forEach(div => div.classList.add('hidden'));
-      // show the chosen one
-      document.getElementById(name).classList.remove('hidden');
+    function openPage(page) {
+      window.location.href = page;
     }
   </script>
 </body>
