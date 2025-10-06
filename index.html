@@ -1,69 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Morning Routine Tracker</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morning Routine</title>
   <style>
     body {
-      font-family: "Comic Sans MS", cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
       text-align: center;
       background-image: url('Lilo and Stitch.jpg');
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
       color: white;
-      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: brightness(0.9);
     }
+
     h1 {
-      font-size: 2.5em;
-      margin-top: 20px;
-      text-shadow: 2px 2px 4px #000;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 15px 30px;
+      border-radius: 12px;
     }
-    .girl-section {
-      margin-top: 40px;
-    }
-    img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
+
     button {
-      margin-top: 10px;
-      padding: 10px 20px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
       border: none;
-      background-color: rgba(255,255,255,0.8);
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 1.1em;
+      transition: 0.3s;
     }
+
     button:hover {
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.3);
+      color: black;
     }
   </style>
 </head>
 <body>
-  <h1>🌞 Morning Routine Tracker 🌴</h1>
+  <h1>Morning Routine Charts</h1>
 
-  <div class="girl-section">
-    <img src="ava.jpg" alt="Ava">
-    <br>
-    <button onclick="openPage('Ava.html')">Ava's Chart</button>
-  </div>
-
-  <div class="girl-section">
-    <img src="emma.jpg" alt="Emma">
-    <br>
-    <button onclick="openPage('Emma.html')">Emma's Chart</button>
-  </div>
-
-  <div class="girl-section">
-    <img src="olivia.jpg" alt="Olivia">
-    <br>
-    <button onclick="openPage('Olivia.html')">Olivia's Chart</button>
-  </div>
+  <button onclick="openPage('Ava.html')">Ava's Chart</button>
+  <button onclick="openPage('Emma.html')">Emma's Chart</button>
+  <button onclick="openPage('Olivia.html')">Olivia's Chart</button>
 
   <script>
     function openPage(page) {
