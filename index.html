@@ -1,63 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Morning Routine</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-image: url('Lilo and Stitch.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: brightness(0.9);
-    }
+<meta charset="UTF-8">
+<title>Morning Routine</title>
 
-    h1 {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 15px 30px;
-      border-radius: 12px;
-    }
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: url("Lilo and Stitch.jpg") center / cover no-repeat fixed;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+  }
 
-    button {
-      background-color: rgba(0, 0, 0, 0.6);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      margin: 10px;
-      font-size: 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+  h1 { margin-top: 25px; }
 
-    button:hover {
-      background-color: rgba(255, 255, 255, 0.3);
-      color: black;
-    }
-  </style>
+  .countdown span {
+    font-size: 1.3em;
+    padding: 0 6px;
+    font-weight: bold;
+  }
+
+  .buttons {
+    margin-top: 40px;
+    z-index: 5;
+    position: relative;
+  }
+
+  button {
+    font-size: 1.2em;
+    padding: 14px 22px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.9);
+  }
+
+  #snow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  #snowpile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    background: white;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    z-index: 2;
+    transition: height 1s;
+  }
+
+  #xmas-anim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+</style>
 </head>
+
 <body>
-  <h1>Morning Routine Charts</h1>
 
-  <button onclick="openPage('Ava.html')">Ava's Chart</button>
-  <button onclick="openPage('Emma.html')">Emma's Chart</button>
-  <button onclick="openPage('Olivia.html')">Olivia's Chart</button>
+<h1>🎄 Morning Routine 🎄</h1>
 
-  <script>
-    function openPage(page) {
-      window.location.href = page;
+<div class="countdown">
+  <span id="days"></span>d
+  <span id="hours"></span>h
+  <span id="minutes"></span>m
+  <span id="seconds"></span>s
+  until Christmas!
+</div>
+
+<div id="snow"></div>
+<div id="xmas-anim"></div>
+<div id="snowpile"></div>
+
+<div class="buttons">
+  <button onclick="location.href='Ava.html'">Ava</button>
+  <button onclick="location.href='Emma.html'">Emma</button>
+  <button onclick="location.href='Olivia.html'">Olivia</button>
+</div>
+
+<script>
+(function () {
+
+  /* ---------- countdown ---------- */
+  function nextChristmas(now){
+    let x=new Date(now.getFullYear(),11,25);
+    if(now>x) x=new Date(now.getFullYear()+1,11,25);
+    return x;
+  }
+
+  function updateTime(){
+    const now=new Date();
+    const diff=nextChristmas(now)-now;
+    days.textContent=Math.floor(diff/86400000);
+    hours.textContent=String(Math.floor(diff/3600000)%24).padStart(2,"0");
+    minutes.textContent=String(Math.floor(diff/60000)%60).padStart(2,"0");
+    seconds.textContent=String(Math.floor(diff/1000)%60).padStart(2,"0");
+  }
+
+  setInterval(updateTime,1000);
+  updateTime();
+
+  /* ---------- snow falling ---------- */
+  const snow=document.getElementById("snow");
+  const pile=document.getElementById("snowpile");
+  let pileHeight=0;
+
+  function makeFlake(){
+    const f=document.createElement("div");
+    f.textContent="❄️";
+    f.style.cssText=`
+      position:absolute;
+      left:${Math.random()*100}%;
+      top:-30px;
+      font-size:${12+Math.random()*18}px;
+      animation:fall ${6+Math.random()*6}s linear infinite;
+    `;
+    snow.appendChild(f);
+
+    setTimeout(()=>{
+      snow.removeChild(f);
+      pileHeight=Math.min(pileHeight+0.4,120);
+      pile.style.height=pileHeight+"px";
+    },8000);
+  }
+
+  setInterval(makeFlake,180);
+
+  /* ---------- holiday animations ---------- */
+  const anim=document.getElementById("xmas-anim");
+
+  function clearAnim(){ anim.innerHTML=""; }
+
+  function santa(){
+    let s=document.createElement("div");
+    s.textContent="🎅";
+    s.style.cssText=`position:absolute;left:-80px;top:60px;
+    font-size:52px;animation:santa 15s linear infinite;`;
+    anim.appendChild(s);
+  }
+
+  function christmasDay(){
+    for(let i=0;i<30;i++){
+      let e=document.createElement("div");
+      e.textContent=["🎄","🎁","🎅","❄️"][Math.floor(Math.random()*4)];
+      e.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-30px;
+      font-size:32px;animation:fall ${3+Math.random()*4}s linear infinite;`;
+      anim.appendChild(e);
     }
-  </script>
+  }
+
+  function daily(){
+    for(let i=0;i<12;i++){
+      let e=document.createElement("div");
+      e.textContent="🎄";
+      e.style.cssText=`position:absolute;left:${Math.random()*100}%;
+      top:${30+Math.random()*40}%;
+      font-size:34px;animation:twinkle 2s infinite;`;
+      anim.appendChild(e);
+    }
+  }
+
+  function updateAnim(){
+    clearAnim();
+    const d=new Date();
+    if(d.getMonth()==11 && d.getDate()==24) santa();
+    else if(d.getMonth()==11 && d.getDate()==25) christmasDay();
+    else daily();
+  }
+
+  updateAnim();
+  setInterval(updateAnim,60000);
+
+  /* ---------- animations ---------- */
+  const style=document.createElement("style");
+  style.textContent=`
+    @keyframes fall {to{transform:translateY(120vh) rotate(360deg)}}
+    @keyframes santa {to{transform:translateX(120vw)}}
+    @keyframes twinkle {0%,100%{opacity:.5}50%{opacity:1}}
+  `;
+  document.head.appendChild(style);
+
+})();
+</script>
+
 </body>
 </html>
