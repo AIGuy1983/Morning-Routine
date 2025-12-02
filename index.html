@@ -15,35 +15,47 @@
     overflow-x: hidden;
   }
 
-  h1 { margin-top: 25px; }
+  .frame {
+    min-height: 100vh;
+    border: 14px solid red;
+    box-shadow: inset 0 0 25px rgba(255,255,255,.6);
+  }
+
+  h1 { margin-top: 20px; }
+
+  .countdown {
+    background: rgba(0,0,0,0.6);
+    display: inline-block;
+    padding: 16px 20px;
+    border-radius: 15px;
+    border: 4px dashed white;
+    margin-bottom: 20px;
+  }
 
   .countdown span {
-    font-size: 1.3em;
-    padding: 0 6px;
-    font-weight: bold;
+    font-size: 1.8em;
+    margin: 0 6px;
+    color: #ffeb3b;
   }
 
   .buttons {
     margin-top: 40px;
-    z-index: 5;
-    position: relative;
   }
 
   button {
     font-size: 1.2em;
     padding: 14px 22px;
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: none;
     cursor: pointer;
-    background: rgba(255,255,255,0.9);
+    background: white;
   }
 
-  #snow {
+  #snow, #xmas-anim {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 1;
   }
 
   #snowpile {
@@ -51,32 +63,24 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 0px;
+    height: 0;
     background: white;
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
-    z-index: 2;
-    transition: height 1s;
-  }
-
-  #xmas-anim {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 3;
   }
 </style>
 </head>
 
 <body>
+<div class="frame">
 
 <h1>🎄 Morning Routine 🎄</h1>
 
 <div class="countdown">
-  <span id="days"></span>d
-  <span id="hours"></span>h
-  <span id="minutes"></span>m
-  <span id="seconds"></span>s
+  <span id="days">0</span>d
+  <span id="hours">00</span>h
+  <span id="minutes">00</span>m
+  <span id="seconds">00</span>s
   until Christmas!
 </div>
 
@@ -88,111 +92,79 @@
   <button onclick="location.href='Ava.html'">Ava</button>
   <button onclick="location.href='Emma.html'">Emma</button>
   <button onclick="location.href='Olivia.html'">Olivia</button>
+  <br><br>
+  <button onclick="location.href='dashboard.html'">Parent Dashboard</button>
+</div>
+
 </div>
 
 <script>
-(function () {
+/* ---------- COUNTDOWN ---------- */
+function nextChristmas(){
+  const now=new Date();
+  let x=new Date(now.getFullYear(),11,25);
+  if(now>x) x=new Date(now.getFullYear()+1,11,25);
+  return x;
+}
+setInterval(()=>{
+  const diff=nextChristmas()-new Date();
+  days.textContent=Math.floor(diff/86400000);
+  hours.textContent=String(Math.floor(diff/3600000)%24).padStart(2,"0");
+  minutes.textContent=String(Math.floor(diff/60000)%60).padStart(2,"0");
+  seconds.textContent=String(Math.floor(diff/1000)%60).padStart(2,"0");
+},1000);
 
-  /* ---------- countdown ---------- */
-  function nextChristmas(now){
-    let x=new Date(now.getFullYear(),11,25);
-    if(now>x) x=new Date(now.getFullYear()+1,11,25);
-    return x;
-  }
+/* ---------- SNOW + PILE ---------- */
+const snow=document.getElementById("snow");
+const pile=document.getElementById("snowpile");
+let pileHeight=0;
 
-  function updateTime(){
-    const now=new Date();
-    const diff=nextChristmas(now)-now;
-    days.textContent=Math.floor(diff/86400000);
-    hours.textContent=String(Math.floor(diff/3600000)%24).padStart(2,"0");
-    minutes.textContent=String(Math.floor(diff/60000)%60).padStart(2,"0");
-    seconds.textContent=String(Math.floor(diff/1000)%60).padStart(2,"0");
-  }
-
-  setInterval(updateTime,1000);
-  updateTime();
-
-  /* ---------- snow falling ---------- */
-  const snow=document.getElementById("snow");
-  const pile=document.getElementById("snowpile");
-  let pileHeight=0;
-
-  function makeFlake(){
+setInterval(()=>{
+  for(let i=0;i<3;i++){
     const f=document.createElement("div");
     f.textContent="❄️";
-    f.style.cssText=`
-      position:absolute;
-      left:${Math.random()*100}%;
-      top:-30px;
-      font-size:${12+Math.random()*18}px;
-      animation:fall ${6+Math.random()*6}s linear infinite;
-    `;
+    f.style.cssText=`position:absolute;left:${Math.random()*100}%;
+    top:-20px;font-size:${12+Math.random()*22}px;
+    animation:fall ${6+Math.random()*5}s linear`;
     snow.appendChild(f);
-
     setTimeout(()=>{
       snow.removeChild(f);
-      pileHeight=Math.min(pileHeight+0.4,120);
+      pileHeight=Math.min(pileHeight+0.6,160);
       pile.style.height=pileHeight+"px";
     },8000);
   }
+},140);
 
-  setInterval(makeFlake,180);
+/* ---------- ELF ON THE SHELF ---------- */
+const elfSpots=[
+  {top:"18%",left:"4%"},
+  {top:"22%",left:"85%"},
+  {top:"45%",left:"10%"},
+  {top:"60%",left:"80%"},
+  {top:"70%",left:"50%"},
+  {top:"30%",left:"60%"},
+];
 
-  /* ---------- holiday animations ---------- */
-  const anim=document.getElementById("xmas-anim");
+function dayOfYear(d){
+  return Math.floor((d-new Date(d.getFullYear(),0,0))/86400000);
+}
 
-  function clearAnim(){ anim.innerHTML=""; }
-
-  function santa(){
-    let s=document.createElement("div");
-    s.textContent="🎅";
-    s.style.cssText=`position:absolute;left:-80px;top:60px;
-    font-size:52px;animation:santa 15s linear infinite;`;
-    anim.appendChild(s);
-  }
-
-  function christmasDay(){
-    for(let i=0;i<30;i++){
-      let e=document.createElement("div");
-      e.textContent=["🎄","🎁","🎅","❄️"][Math.floor(Math.random()*4)];
-      e.style.cssText=`position:absolute;left:${Math.random()*100}%;top:-30px;
-      font-size:32px;animation:fall ${3+Math.random()*4}s linear infinite;`;
-      anim.appendChild(e);
-    }
-  }
-
-  function daily(){
-    for(let i=0;i<12;i++){
-      let e=document.createElement("div");
-      e.textContent="🎄";
-      e.style.cssText=`position:absolute;left:${Math.random()*100}%;
-      top:${30+Math.random()*40}%;
-      font-size:34px;animation:twinkle 2s infinite;`;
-      anim.appendChild(e);
-    }
-  }
-
-  function updateAnim(){
-    clearAnim();
-    const d=new Date();
-    if(d.getMonth()==11 && d.getDate()==24) santa();
-    else if(d.getMonth()==11 && d.getDate()==25) christmasDay();
-    else daily();
-  }
-
-  updateAnim();
-  setInterval(updateAnim,60000);
-
-  /* ---------- animations ---------- */
-  const style=document.createElement("style");
-  style.textContent=`
-    @keyframes fall {to{transform:translateY(120vh) rotate(360deg)}}
-    @keyframes santa {to{transform:translateX(120vw)}}
-    @keyframes twinkle {0%,100%{opacity:.5}50%{opacity:1}}
-  `;
-  document.head.appendChild(style);
-
+(function placeElf(){
+  const elf=document.createElement("div");
+  const spot=elfSpots[dayOfYear(new Date())%elfSpots.length];
+  elf.textContent="🧝‍♂️";
+  elf.style.cssText=`position:fixed;top:${spot.top};
+  left:${spot.left};font-size:42px;z-index:10;cursor:pointer`;
+  elf.onclick=()=>alert("🎄 You found the Elf!");
+  document.body.appendChild(elf);
 })();
+
+/* ---------- ANIMATIONS ---------- */
+const s=document.createElement("style");
+s.textContent=`
+@keyframes fall{to{transform:translateY(120vh) rotate(360deg)}}
+`;
+document.head.appendChild(s);
 </script>
 
 </body>
