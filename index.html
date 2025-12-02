@@ -1,116 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Morning Routine</title>
-
-<style>
-body {
-  margin:0;
-  background:url("Christmas Tree.jpg") center/cover fixed no-repeat;
-  font-family:Arial, sans-serif;
-  color:white;
-  text-align:center;
-}
-
-.wrapper {
-  min-height:100vh;
-  border:18px solid transparent;
-  border-image: repeating-linear-gradient(
-    45deg,
-    red 0 10px,
-    white 10px 20px
-  ) 30;
-  box-shadow: inset 0 0 40px rgba(0,0,0,.6);
-}
-
-.countdown {
-  margin:20px auto;
-  padding:15px;
-  background:rgba(0,0,0,.6);
-  border-radius:15px;
-  border:4px dashed gold;
-  max-width:420px;
-  font-size:1.2em;
-}
-
-button {
-  padding:15px 30px;
-  font-size:1.2em;
-  margin:10px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-}
-
-#snow { position:fixed; inset:0; pointer-events:none; }
-#snowpile {
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:60px;
-  background:linear-gradient(#fff,#eef);
-  border-top-left-radius:100% 35px;
-  border-top-right-radius:100% 35px;
-  display:flex;
-  justify-content:space-evenly;
-  align-items:flex-end;
-  pointer-events:none;
-}
-.snowman { font-size:38px; margin-bottom:5px; }
-</style>
 </head>
-
-<body>
-<div class="wrapper">
+<body style="margin:0; font-family:Arial; background:url('Christmas Tree.jpg') center/cover fixed; color:white; text-align:center;">
 
 <h1>🎄 Morning Routine 🎄</h1>
 
-<div class="countdown">
-<span id="d"></span>d
-<span id="h"></span>h
-<span id="m"></span>m
-<span id="s"></span>s until Christmas!
+<div style="margin-top:30px;">
+
+<!-- Ava -->
+<div style="display:inline-block; position:relative; margin:20px;">
+  <div onclick="location.href='Ava.html'" style="padding:20px; background:rgba(255,0,0,0.7); border-radius:12px; cursor:pointer; font-weight:bold;">
+    Ava
+  </div>
+  <img src="stocking_ava.png" style="width:60px; position:absolute; top:-80px; left:50%; transform:translateX(-50%) scaleY(0); transition: transform 0.5s;" class="stocking-ava">
 </div>
 
-<button onclick="location.href='Ava.html'">Ava</button>
-<button onclick="location.href='Emma.html'">Emma</button>
-<button onclick="location.href='Olivia.html'">Olivia</button>
-<br>
-<button onclick="location.href='dashboard.html'">Parent Dashboard</button>
+<!-- Emma -->
+<div style="display:inline-block; position:relative; margin:20px;">
+  <div onclick="location.href='Emma.html'" style="padding:20px; background:rgba(0,128,0,0.7); border-radius:12px; cursor:pointer; font-weight:bold;">
+    Emma
+  </div>
+  <img src="stocking_emma.png" style="width:60px; position:absolute; top:-80px; left:50%; transform:translateX(-50%) scaleY(0); transition: transform 0.5s;" class="stocking-emma">
+</div>
 
+<!-- Olivia -->
+<div style="display:inline-block; position:relative; margin:20px;">
+  <div onclick="location.href='Olivia.html'" style="padding:20px; background:rgba(0,0,255,0.7); border-radius:12px; cursor:pointer; font-weight:bold;">
+    Olivia
+  </div>
+  <img src="stocking_olivia.png" style="width:60px; position:absolute; top:-80px; left:50%; transform:translateX(-50%) scaleY(0); transition: transform 0.5s;" class="stocking-olivia">
+</div>
+
+</div>
+
+<br><br>
+<button onclick="location.href='dashboard.html'" style="padding:12px 20px; font-size:1.2em; border-radius:10px;">Parent Dashboard</button>
+
+<!-- Snow and snowmen -->
 <div id="snow"></div>
-<div id="snowpile">
-  <span class="snowman">⛄</span>
-  <span class="snowman">⛄</span>
-</div>
-
+<div id="snowpile" style="position:fixed; bottom:0; left:0; width:100%; height:60px; display:flex; justify-content:space-evenly; align-items:flex-end; pointer-events:none; background:linear-gradient(#fff,#eef); border-top-left-radius:100% 35px; border-top-right-radius:100% 35px;">
+  <span style="font-size:38px; margin-bottom:5px;">⛄</span>
+  <span style="font-size:38px; margin-bottom:5px;">⛄</span>
 </div>
 
 <script>
-/* Countdown */
-function nextX(){
- let n=new Date(),x=new Date(n.getFullYear(),11,25);
- if(n>x) x=new Date(n.getFullYear()+1,11,25);
- return x;
+// Stocking animations
+function setupStocking(className){
+  let stocking = document.querySelector(className);
+  let parentDiv = stocking.parentElement.querySelector("div");
+  parentDiv.addEventListener("mouseenter", () => { stocking.style.transform = "translateX(-50%) scaleY(1)"; });
+  parentDiv.addEventListener("mouseleave", () => { stocking.style.transform = "translateX(-50%) scaleY(0)"; });
 }
-setInterval(()=>{
- let diff=nextX()-new Date();
- d.textContent=Math.floor(diff/86400000);
- h.textContent=String(Math.floor(diff/36e5)%24).padStart(2,"0");
- m.textContent=String(Math.floor(diff/6e4)%60).padStart(2,"0");
- s.textContent=String(Math.floor(diff/1000)%60).padStart(2,"0");
-},1000);
+setupStocking(".stocking-ava");
+setupStocking(".stocking-emma");
+setupStocking(".stocking-olivia");
 
-/* Snow */
+// Snow animation
 let pile=0;
 setInterval(()=>{
  let f=document.createElement("div");
  f.textContent="❄️";
- f.style=`position:absolute;left:${Math.random()*100}%;
- top:-20px;font-size:${14+Math.random()*18}px;
- animation:fall ${6+Math.random()*4}s linear`;
+ f.style=`position:absolute; left:${Math.random()*100}%; top:-20px; font-size:${14+Math.random()*18}px; animation:fall ${6+Math.random()*4}s linear`;
  snow.appendChild(f);
  setTimeout(()=>{
   snow.removeChild(f);
@@ -123,5 +76,6 @@ let st=document.createElement("style");
 st.textContent="@keyframes fall{to{transform:translateY(120vh) rotate(360deg)}}";
 document.head.appendChild(st);
 </script>
+
 </body>
 </html>
